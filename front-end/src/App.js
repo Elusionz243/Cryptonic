@@ -1,13 +1,60 @@
 import { useEffect, useState } from "react";
 import { Web3 } from "web3";
+import { init, useConnectWallet } from "@web3-onboard/react";
+import { ethers } from "ethers";
+
+import injectedModule from "@web3-onboard/injected-wallets";
+import phantomModule from "@web3-onboard/phantom";
 
 import "./App.scss";
 
+const apiKey = "a1a03582-97a2-4ffb-8e25-26a716c286da";
+const injected = injectedModule();
+const infuraKey = "<INFURA_KEY>";
+const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`;
+
+init({
+  apiKey,
+  wallets: [injected],
+  chains: [
+    {
+      id: "0x1",
+      token: "ETH",
+      label: "Ethereum Mainnet",
+      rpcUrl,
+    },
+    {
+      id: 42161,
+      token: "ARB-ETH",
+      label: "Arbitrum One",
+      rpcUrl: "https://rpc.ankr.com/arbitrum",
+    },
+    {
+      id: "0xa4ba",
+      token: "ARB",
+      label: "Arbitrum Nova",
+      rpcUrl: "https://nova.arbitrum.io/rpc",
+    },
+    {
+      id: "0x2105",
+      token: "ETH",
+      label: "Base",
+      rpcUrl: "https://mainnet.base.org",
+    },
+  ],
+});
+
 export default function App() {
   const web3 = new Web3("https://eth.llamarpc.com");
+  const phantom = phantomModule();
   const [blockNumber, setBlockNumber] = useState(null);
   const [chainId, setChainId] = useState(null);
   const [balance, setBalance] = useState(null);
+  const [ethAddress, setEthAddress] = useState(
+    "0x637e62f6d840FE43717c5430551Daf28Bb4E3CA9"
+  );
+
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
 
   useEffect(() => {
     const fetchBlockchainData = async () => {
@@ -29,6 +76,12 @@ export default function App() {
     <div className="App">
       <div className="App__header">
         <h1>Cryptonic</h1>
+        <button
+          disabled={connecting}
+          onClick={() => (wallet ? disconnect(wallet) : connect())}
+        >
+          {connecting ? "connecting" : wallet ? "disconnect" : "connect"}
+        </button>
       </div>
       <div className="App__content">
         {balance !== null && (

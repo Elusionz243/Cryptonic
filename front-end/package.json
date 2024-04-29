@@ -6,12 +6,19 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@web3-onboard/injected-wallets": "^2.10.16",
+    "@web3-onboard/phantom": "^2.0.3",
+    "@web3-onboard/react": "^2.8.17",
+    "@web3-react/core": "^8.2.3",
+    "@web3-react/types": "^8.2.3",
+    "eventemitter3": "^5.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "sass": "^1.72.0",
     "web-vitals": "^2.1.4",
-    "web3": "^4.8.0"
+    "web3": "^4.8.0",
+    "web3-react-phantom": "^1.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
