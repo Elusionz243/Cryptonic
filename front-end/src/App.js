@@ -9,7 +9,8 @@ import injectedModule from "@web3-onboard/injected-wallets";
 import "./App.scss";
 
 const phantom = phantomModule();
-const apiKey = "a1a03582-97a2-4ffb-8e25-26a716c286da";
+const ethApiKey = "a1a03582-97a2-4ffb-8e25-26a716c286da";
+const solApiKey = "2FzG0c9TGITvoL6ssJk-AbGYVdWCi07p";
 
 init({
   wallets: [phantom],
@@ -18,7 +19,19 @@ init({
       id: "0x1",
       token: "ETH",
       label: "Ethereum Mainnet",
-      rpcUrl: `https://eth-mainnet.g.alchemy.com/v2/${apiKey}`,
+      rpcUrl: `https://eth-mainnet.g.alchemy.com/v2/${ethApiKey}`,
+    },
+    {
+      id: "900",
+      token: "SOL",
+      label: "Solana Mainnet",
+      rpcUrl: `https://solana-mainnet.g.alchemy.com/v2/${solApiKey}`,
+    },
+    {
+      id: "0x2105",
+      token: "ETH",
+      label: "Base",
+      rpcUrl: "https://mainnet.base.org",
     },
   ],
   // appMetadata: {
@@ -64,29 +77,10 @@ init({
 
 export default function App() {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
-  // const web3 = new Web3("https://eth.llamarpc.com");
-  // const [blockNumber, setBlockNumber] = useState(null);
-  // const [chainId, setChainId] = useState(null);
-  // const [balance, setBalance] = useState(null);
-  // const [ethAddress, setEthAddress] = useState(
-  //   "0x637e62f6d840FE43717c5430551Daf28Bb4E3CA9"
-  // );
-
-  // useEffect(() => {
-  //   const fetchBlockchainData = async () => {
-  //     const tempBlockNumber = await web3.eth.getBlockNumber();
-  //     const tempChainId = await web3.eth.getChainId();
-  //     const tempBalance = await web3.eth.getBalance(
-  //       "0x637e62f6d840FE43717c5430551Daf28Bb4E3CA9"
-  //     );
-  //     setBalance((temp) => (temp = web3.utils.fromWei(tempBalance, "ether")));
-  //     setBlockNumber((temp) => (temp = tempBlockNumber));
-  //     setChainId((temp) => (temp = tempChainId));
-  //   };
-  //   fetchBlockchainData();
-  // }, []);
-
-  // console.log("Block Number:", blockNumber);
+  console.log(connecting);
+  // if (connecting) {
+  //   console.log(wallet.accounts[0].balance);
+  // }
 
   return (
     <div className="App">
