@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react";
-import { Web3 } from "web3";
 import { init, useConnectWallet } from "@web3-onboard/react";
 import phantomModule from "@web3-onboard/phantom";
-import { ethers } from "ethers";
-
-import injectedModule from "@web3-onboard/injected-wallets";
+import { Keypair } from "@solana/web3.js";
+import { getKeypairFromEnvironment } from "@solana-developers/helpers";
 
 import "./App.scss";
 
 const phantom = phantomModule();
-const ethApiKey = "a1a03582-97a2-4ffb-8e25-26a716c286da";
-const solApiKey = "2FzG0c9TGITvoL6ssJk-AbGYVdWCi07p";
+const ethApiKey = process.env.ETHERIUM_API_KEY;
+const solApiKey = process.env.SOLANA_API_KEY;
+
+const keypair = getKeypairFromEnvironment(process.env.SECRET_KEY);
 
 init({
   wallets: [phantom],
@@ -34,46 +33,7 @@ init({
       rpcUrl: "https://mainnet.base.org",
     },
   ],
-  // appMetadata: {
-  //   name: "Phantom Web3-Onboard Demo",
-  //   icon: phantomLogo,
-  //   description: "My phantom wallet dapp using Onboard",
-  // },
 });
-// const injected = injectedModule();
-// const infuraKey = "<INFURA_KEY>";
-// const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`;
-
-// init({
-//   apiKey,
-//   wallets: [injected],
-//   chains: [
-//     {
-//       id: "0x1",
-//       token: "ETH",
-//       label: "Ethereum Mainnet",
-//       rpcUrl,
-//     },
-//     {
-//       id: 42161,
-//       token: "ARB-ETH",
-//       label: "Arbitrum One",
-//       rpcUrl: "https://rpc.ankr.com/arbitrum",
-//     },
-//     {
-//       id: "0xa4ba",
-//       token: "ARB",
-//       label: "Arbitrum Nova",
-//       rpcUrl: "https://nova.arbitrum.io/rpc",
-//     },
-//     {
-//       id: "0x2105",
-//       token: "ETH",
-//       label: "Base",
-//       rpcUrl: "https://mainnet.base.org",
-//     },
-//   ],
-// });
 
 export default function App() {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
