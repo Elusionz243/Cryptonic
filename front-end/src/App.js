@@ -15,17 +15,13 @@ const ethApiKey = process.env.REACT_APP_PHANTOM_API_KEY;
 const solApiKey = process.env.REACT_APP_SOLANA_API_KEY;
 
 const connection = new Connection(clusterApiUrl("devnet"));
-const address = new PublicKey("BkuexoV2sfmCgKgNyiEux6Xj8Yob2sYfsrHFDLk5LyMt");
+const keypair = Keypair.fromSecretKey(
+  new Uint8Array(JSON.parse(process.env.REACT_APP_SECRET_KEY))
+);
+const address = new PublicKey(keypair.publicKey.toBase58());
+console.log(address.toBase58());
 const balance = await connection.getBalance(address);
 const balanceInSol = balance / LAMPORTS_PER_SOL;
-
-const keypair = Keypair.generate();
-console.log(keypair.publicKey.toBase58());
-console.log(keypair.secretKey.toString());
-
-console.log(
-  `Connecting to Ethereum Mainnet with API key: ${ethApiKey}\nConnecting to Solana Mainnet with API key: ${solApiKey}`
-);
 
 init({
   wallets: [phantom],
@@ -67,8 +63,7 @@ export default function App() {
           {connecting ? "connecting" : wallet ? "disconnect" : "connect"}
         </button>
         <h4>Address: {address.toBase58()}</h4>
-        <p>Balance: {balance}</p>
-        <p>Balance in SOL: {balanceInSol} SOL</p>
+        <p>{balanceInSol.toPrecision(10)} SOL</p>
       </div>
       <div className="App__footer">
         <p>&copy; 2024 Cryptonic. All rights reserved.</p>
