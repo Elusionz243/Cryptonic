@@ -19,6 +19,12 @@
     color: #fff;
   }
 
+  &__wallet-btn {
+    padding: 1rem 2rem;
+    background-color: $background;
+    color: $accent;
+  }
+
   &__footer {
     border-top: 1px solid $accent;
     color: #fff;
